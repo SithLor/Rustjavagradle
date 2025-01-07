@@ -3,6 +3,8 @@
  */
 package org.example;
 
+import org.example.NativeLib;
+
 public class App {
     public String getGreeting() {
         return "Hello World!";

@@ -66,25 +66,17 @@ tasks.register<Exec>("generateJniHeaders") {
 
 
 
-tasks.register<Exec>("buildRustBinary") {
-    group = "build"
-    description = "Build the Rust binary."
-    workingDir = file("../lib_rust") // Ensure this path is correct
-    commandLine("cargo", "build", "--release")
-}
-tasks.register<Copy>("copyRustBinary") {
-    group = "build"
-    description = "Copy the Rust binary to the resources folder."
-    dependsOn("buildRustBinary")
-    from("../rust/target/release/your_binary_name")
-    into("src/main/resources/binaries")
-}
+
 
 // ...existing code...
 
-
+tasks.register<Copy>("copyLibtemp") {
+    from("../temp/target/release/libtemp.so")
+    into("./src/main/resources")
+}
 
 // Ensure the headers are generated before compilation
 tasks.named("compileJava") {
+    dependsOn("copyLibtemp")
     dependsOn("generateJniHeaders")
 }
